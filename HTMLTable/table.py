@@ -2,15 +2,10 @@
 # -*- encoding=utf8 -*-
 
 '''
-FileName:   table.py
-Author:     Fasion Chan
-@contact:   fasionchan@gmail.com
-@version:   $Id$
-
-Description:
-
-Changelog:
-
+Author: fasion
+Created time: 2022-01-21 17:13:09
+Last Modified by: fasion
+Last Modified time: 2022-01-21 17:13:51
 '''
 
 from .cell import (
@@ -40,6 +35,10 @@ class HTMLTable(list, HTMLTag):
         self.colname2index = {}
         self.index2colname = {}
 
+    def feed_openpyxl_sheet(self, *args, **kwargs):
+        from .openpyxl_util import fill_html_table_from_excel_sheet
+        fill_html_table_from_excel_sheet(self, *args, **kwargs)
+
     def set_colname(self, index, name):
         old = self.index2colname.pop(index, None)
         if old is not None:
@@ -51,6 +50,11 @@ class HTMLTable(list, HTMLTag):
     def set_colnames(self, names):
         for index, name in enumerate(names):
             self.set_colname(index=index, name=name)
+
+    def append_row(self, cells=(), is_header=False):
+        row = HTMLTableRow(cells=cells, is_header=is_header)
+        self.append(row)
+        return row
 
     def append_header_rows(self, rows):
         return self.append_rows(rows=rows, is_header=True)

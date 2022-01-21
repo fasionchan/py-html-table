@@ -2,15 +2,10 @@
 # -*- encoding=utf8 -*-
 
 '''
-FileName:   row.py
-Author:     Fasion Chan
-@contact:   fasionchan@gmail.com
-@version:   $Id$
-
-Description:
-
-Changelog:
-
+Author: fasion
+Created time: 2022-01-21 17:13:09
+Last Modified by: fasion
+Last Modified time: 2022-01-21 17:14:05
 '''
 
 from .cell import (
@@ -31,13 +26,18 @@ class HTMLTableRow(list, HTMLTag):
 
         self.append_cells(cells=cells)
 
-    def append_cells(self, cells):
+    def append_cell(self, value):
         cell_tag = 'th' if self.is_header else 'td'
+        cell = HTMLTableCell(
+            tag=cell_tag,
+            value=value,
+        )
+        self.append(cell)
+        return cell
+
+    def append_cells(self, cells):
         for cell in cells:
-            self.append(HTMLTableCell(
-                tag=cell_tag,
-                value=cell,
-            ))
+            self.append_cell(cell)
 
     def set_cell_style(self, style):
         for cell in self:

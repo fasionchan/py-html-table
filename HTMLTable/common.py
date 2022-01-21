@@ -2,15 +2,10 @@
 # -*- encoding=utf8 -*-
 
 '''
-FileName:   common.py
-Author:     Fasion Chan
-@contact:   fasionchan@gmail.com
-@version:   $Id$
-
-Description:
-
-Changelog:
-
+Author: fasion
+Created time: 2022-01-21 17:13:09
+Last Modified by: fasion
+Last Modified time: 2022-01-21 17:14:20
 '''
 
 import html
@@ -59,10 +54,11 @@ class HTMLStyle(dict):
 
 class HTMLTag(object):
 
-    def __init__(self, tag, value=None, value_formatter=str):
+    def __init__(self, tag, value=None, value_formatter=str, escape=True):
         self.set_tag(tag=tag)
         self.set_value(value=value)
         self.set_value_formatter(formatter=value_formatter)
+        self.set_escape(escape=escape)
 
         self.attr = HTMLAttribute()
         self.style = HTMLStyle()
@@ -82,10 +78,17 @@ class HTMLTag(object):
     def set_style(self, style):
         self.style.update(style)
 
+    def set_escape(self, escape):
+        self.escape = escape
+
     def to_html_inner_chips(self):
         chips = []
         if self.value:
-            chips.append(html.escape(self.value_formatter(self.value)))
+            value = self.value_formatter(self.value)
+            if self.escape:
+                value = html.escape(value)
+
+            chips.append(value)
         return chips
 
     def to_html_inner(self):

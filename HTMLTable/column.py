@@ -2,15 +2,10 @@
 # -*- encoding=utf8 -*-
 
 '''
-FileName:   column.py
-Author:     Fasion Chan
-@contact:   fasionchan@gmail.com
-@version:   $Id$
-
-Description:
-
-Changelog:
-
+Author: fasion
+Created time: 2022-01-21 17:13:09
+Last Modified by: fasion
+Last Modified time: 2022-01-21 17:14:31
 '''
 
 
