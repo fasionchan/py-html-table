@@ -5,7 +5,7 @@
 Author: fasion
 Created time: 2022-01-21 17:13:09
 Last Modified by: fasion
-Last Modified time: 2022-01-21 17:14:37
+Last Modified time: 2022-02-08 16:17:38
 '''
 
 import html
@@ -18,8 +18,8 @@ from .common import (
 
 class HTMLTableCell(HTMLTag):
 
-    def __init__(self, value, tag='td', colspan=1, rowspan=1):
-        super().__init__(tag=tag, value=value)
+    def __init__(self, value, tag='td', colspan=1, rowspan=1, escape=True):
+        super().__init__(tag=tag, value=value, escape=escape)
 
         self.__is_span = False
 

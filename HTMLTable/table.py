@@ -5,7 +5,7 @@
 Author: fasion
 Created time: 2022-01-21 17:13:09
 Last Modified by: fasion
-Last Modified time: 2022-01-21 17:13:51
+Last Modified time: 2022-12-20 14:49:33
 '''
 
 from .cell import (
@@ -23,12 +23,13 @@ from .row import (
 
 class HTMLTable(list, HTMLTag):
 
-    def __init__(self, caption='', rows=()):
+    def __init__(self, caption='', rows=(), escape_cell=True):
         list.__init__(self)
         HTMLTag.__init__(self, tag='table')
 
         self.caption = HTMLTag('caption')
         self.caption.set_value(value=caption)
+        self.escape_cell = escape_cell
 
         self.append_rows(rows=rows)
 
@@ -51,23 +52,26 @@ class HTMLTable(list, HTMLTag):
         for index, name in enumerate(names):
             self.set_colname(index=index, name=name)
 
-    def append_row(self, cells=(), is_header=False):
-        row = HTMLTableRow(cells=cells, is_header=is_header)
+    def append_row(self, cells=(), is_header=False, escape_cell=None):
+        row = HTMLTableRow(
+            cells=cells,
+            is_header=is_header,
+            escape_cell=self.escape_cell if escape_cell is None else escape_cell,
+        )
+
         self.append(row)
+
         return row
 
-    def append_header_rows(self, rows):
-        return self.append_rows(rows=rows, is_header=True)
+    def append_header_rows(self, rows, escape_cell=True):
+        return self.append_rows(rows=rows, is_header=True, escape_cell=escape_cell)
 
-    def append_data_rows(self, rows):
-        return self.append_rows(rows=rows, is_header=False)
+    def append_data_rows(self, rows, escape_cell=True):
+        return self.append_rows(rows=rows, is_header=False, escape_cell=escape_cell)
 
-    def append_rows(self, rows, is_header=False):
+    def append_rows(self, rows, is_header=False, escape_cell=None):
         for row in rows:
-            self.append(HTMLTableRow(
-                cells=row,
-                is_header=is_header,
-            ))
+            self.append_row(cells=row, is_header=is_header, escape_cell=escape_cell)
 
     def iter_header_rows(self):
         for row in self:

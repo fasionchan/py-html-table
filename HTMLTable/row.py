@@ -5,7 +5,7 @@
 Author: fasion
 Created time: 2022-01-21 17:13:09
 Last Modified by: fasion
-Last Modified time: 2022-01-21 17:14:05
+Last Modified time: 2022-02-08 16:18:33
 '''
 
 from .cell import (
@@ -18,11 +18,12 @@ from .common import (
 
 class HTMLTableRow(list, HTMLTag):
 
-    def __init__(self, cells=(), is_header=False):
+    def __init__(self, cells=(), is_header=False, escape_cell=True):
         list.__init__(self)
         HTMLTag.__init__(self, tag='tr')
 
         self.is_header = is_header
+        self.escape_cell = escape_cell
 
         self.append_cells(cells=cells)
 
@@ -31,6 +32,7 @@ class HTMLTableRow(list, HTMLTag):
         cell = HTMLTableCell(
             tag=cell_tag,
             value=value,
+            escape=self.escape_cell,
         )
         self.append(cell)
         return cell
